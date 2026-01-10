@@ -198,6 +198,11 @@ main {
     font-weight: 600;
 }
 
+.last-check-in {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
 .badge {
     font-family: var(--font-body);
     font-size: 0.7rem;

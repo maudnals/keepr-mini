@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return dueA - dueB;
             });
 
-            const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+            const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric' });
 
             people.forEach((person, index) => {
                 const dueDate = calculateDueDate(person.lastCheckin, person.frequency);
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = `person-card ${categoryClass} ${isDue ? 'status-due' : ''}`;
 
                 const formattedDate = dateFormatter.format(dueDate);
+                const lastDate = dateFormatter.format(new Date(person.lastCheckin));
                 const dateText = isDue ? `✳︎ Due ${formattedDate}` : `Next: ${formattedDate}`;
 
                 card.innerHTML = `
@@ -75,6 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h3>${person.name}</h3>
                         <div class="status-text">
                             ${dateText}
+                        </div>
+                        <div class="status-text last-check-in">
+                            Last: ${lastDate}
                         </div>
                     </div>
                     
