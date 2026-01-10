@@ -1,30 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Elements
     const personList = document.getElementById('person-list');
     const emptyState = document.getElementById('empty-state');
-
-
-    // Admin / Modal elements
-    const adminBtn = document.getElementById('admin-btn');
-    const adminModal = document.getElementById('admin-modal');
     const adminList = document.getElementById('admin-list');
     const adminAddBtn = document.getElementById('admin-add-btn');
-    const adminCloseBtn = document.getElementById('admin-close-btn');
 
+    // Modal Elements (likely only on Admin page)
     const addModal = document.getElementById('add-modal');
     const addForm = document.getElementById('add-form');
     const cancelBtn = document.getElementById('cancel-btn');
     const modalTitle = document.getElementById('modal-title');
 
+    // Data
     let people = JSON.parse(localStorage.getItem('keepr_people')) || [];
-    let editingIndex = null; // Track if we are editing text
+    let editingIndex = null;
+
+    // --- Core Logic ---
 
     function savePeople() {
         localStorage.setItem('keepr_people', JSON.stringify(people));
-        render();
-        // If admin modal is open, refresh it too
-        if (adminModal.open) {
-            renderAdmin();
-        }
+        // Refresh whichever view is active
+        if (personList) render();
+        if (adminList) renderAdmin();
     }
 
     function calculateDueDate(lastCheckin, frequencyDays) {
@@ -34,14 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return due;
     }
 
-    function getDaysOverdue(dueDate) {
-        const now = new Date();
-        const diffTime = now - dueDate;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays;
-    }
+    // --- Main View (Index) Logic ---
 
     function render() {
+        if (!personList) return;
+
         // Clear list but keep empty state
         const items = personList.querySelectorAll('.person-card');
         items.forEach(i => i.remove());
@@ -63,14 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
             people.forEach((person, index) => {
                 const dueDate = calculateDueDate(person.lastCheckin, person.frequency);
                 const now = new Date();
-                // Reset hours to compare dates only for due check
                 const compareDate = new Date(dueDate);
                 compareDate.setHours(23, 59, 59, 999);
 
                 const isDue = now > compareDate;
 
                 const card = document.createElement('div');
-                // Construct category class from label (e.g. "friends-core" -> "cat-friends-core")
                 const categoryClass = person.label ? `cat-${person.label}` : '';
                 card.className = `person-card ${categoryClass} ${isDue ? 'status-due' : ''}`;
 
@@ -85,22 +77,24 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${dateText}
                         </div>
                     </div>
-                    ${person.label ? `<div class="badge">${person.label.replace('-', ' ')}</div>` : '<div></div>'}
                     
+                    ${person.label ? `<div class="badge">${person.label.replace('-', ' ')}</div>` : '<div></div>'}
                 `;
                 personList.appendChild(card);
             });
         }
     }
 
+    // --- Admin View Logic ---
+
     function renderAdmin() {
+        if (!adminList) return;
         adminList.innerHTML = '';
         people.forEach((person, index) => {
             const item = document.createElement('div');
             item.className = 'admin-item';
 
-            // Calculate readable frequency
-            let freqText = `${person.frequency} days`;
+            let freqText = `${person.frequency} day(s)`;
             if (person.frequency % 30 === 0) freqText = `${person.frequency / 30} month(s)`;
             else if (person.frequency % 7 === 0) freqText = `${person.frequency / 7} week(s)`;
 
@@ -127,10 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Modal & Form Logic
+    // --- Form Logic (Shared/Admin) ---
+
     function openForm(index = null) {
+        if (!addModal) return;
         editingIndex = index;
-        addForm.reset(); // clear previous
+        addForm.reset();
 
         if (index !== null) {
             // Edit Mode
@@ -149,59 +145,56 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // New Mode
             modalTitle.textContent = "New Person";
-            addForm.frequency.value = 7; // Reset default
+            addForm.frequency.value = 7;
         }
         addModal.showModal();
     }
 
+    // Event Listeners
+    if (adminAddBtn) {
+        adminAddBtn.addEventListener('click', () => openForm(null));
+    }
 
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => addModal.close());
+    }
 
-    adminBtn.addEventListener('click', () => {
-        renderAdmin();
-        adminModal.showModal();
-    });
+    if (addForm) {
+        addForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(addForm);
+            const name = formData.get('name');
+            const label = formData.get('label');
+            let frequency = parseInt(formData.get('frequency'));
+            const unit = formData.get('unit');
 
-    adminCloseBtn.addEventListener('click', () => adminModal.close());
+            if (unit === 'weeks') frequency *= 7;
+            if (unit === 'months') frequency *= 30;
 
-    adminAddBtn.addEventListener('click', () => openForm(null));
+            if (editingIndex !== null) {
+                // Update
+                people[editingIndex].name = name;
+                people[editingIndex].label = label;
+                people[editingIndex].frequency = frequency;
+                showToast('Person updated');
+            } else {
+                // Create
+                people.push({
+                    name,
+                    label,
+                    frequency,
+                    lastCheckin: new Date().toISOString()
+                });
+                showToast('Person added');
+            }
 
-    cancelBtn.addEventListener('click', () => addModal.close());
+            savePeople();
+            addModal.close();
+        });
+    }
 
-    addForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const formData = new FormData(addForm);
-        const name = formData.get('name');
-        const label = formData.get('label');
-        let frequency = parseInt(formData.get('frequency'));
-        const unit = formData.get('unit');
+    // --- Global Actions (exposed to window for onclick) ---
 
-        if (unit === 'weeks') frequency *= 7;
-        if (unit === 'months') frequency *= 30;
-
-        if (editingIndex !== null) {
-            // Update
-            people[editingIndex].name = name;
-            people[editingIndex].label = label;
-            people[editingIndex].frequency = frequency;
-            // Should we reset last checkin? changing frequency might mean 'start over', 
-            // but usually you want to keep history. Let's keep lastCheckin unless it's undefined.
-            showToast('Person updated');
-        } else {
-            // Create
-            people.push({
-                name,
-                label,
-                frequency, // stored in days
-                lastCheckin: new Date().toISOString()
-            });
-            showToast('Person added');
-        }
-
-        savePeople();
-        addModal.close();
-    });
-
-    // Global actions for inline HTML handlers
     window.checkIn = (index) => {
         const person = people[index];
         const wasDue = new Date() > calculateDueDate(person.lastCheckin, person.frequency);
@@ -209,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         person.lastCheckin = new Date().toISOString();
         savePeople();
 
-        const msg = wasDue ? `Checked in with ${person.name}!` : `Updated ${person.name}'s check-in!`;
+        const msg = wasDue ? `Checked in with ${person.name}!` : `Early check-in with ${person.name}!`;
         showToast(msg);
     };
 
@@ -227,6 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showToast(message) {
         const toast = document.getElementById('toast');
+        if (!toast) return;
+
         const toastMsg = document.getElementById('toast-message');
 
         toastMsg.textContent = message;
@@ -237,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // Initial render
-    render();
+    // --- Initialization ---
+    if (personList) render();
+    if (adminList) renderAdmin();
 });

@@ -24,7 +24,7 @@
                 <h1>Keepr</h1>
             </div>
 
-            <button id="admin-btn" class="icon-btn" aria-label="Admin Interface" style="margin-left: 8px;">
+            <a href="admin.html" id="admin-btn" class="icon-btn" aria-label="Admin Interface" style="margin-left: 8px;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="3"></circle>
@@ -32,7 +32,7 @@
                         d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
                     </path>
                 </svg>
-            </button>
+            </a>
         </header>
 
         <main id="person-list">
@@ -43,57 +43,16 @@
             </div>
         </main>
 
-        <!-- Admin Modal -->
-        <dialog id="admin-modal">
-            <div class="modal-header">
-                <h2>Manage People</h2>
-                <button id="admin-close-btn" class="icon-btn-small" aria-label="Close">✕</button>
-            </div>
-            <div id="admin-list" class="admin-list">
-                <!-- List will be populated here -->
-            </div>
-            <div class="admin-footer">
-                <button id="admin-add-btn" class="primary-btn" style="width: 100%">+ Add New Person</button>
-            </div>
-        </dialog>
+        <!-- Add/Edit Person Modal (Kept only if needed, but simplified if index is just view) -->
+        <!-- Logic is mostly on Admin now, but we removed add-btn. 
+             However, if checking in is the only action, index.html doesn't need the form modal anymore per se, 
+             UNLESS checkin logic ever needed it (it doesn't).
+             Wait, deleting 'admin-modal' block but we also need to see if 'add-modal' is needed in index.html.
+             If index.html is strictly view/checkin, it doesn't need to add/edit.
+             So we can remove add-modal from index.html entirely.
+        -->
 
-        <!-- Add/Edit Person Modal -->
-        <dialog id="add-modal">
-            <form id="add-form" method="dialog">
-                <h2 id="modal-title">New person</h2>
-                <div class="input-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required placeholder="e.g., Mom" autocomplete="off">
-                </div>
-                <div class="input-group">
-                    <label for="label">Label (optional)</label>
-                    <select id="label" name="label">
-                        <option value="">None</option>
-                        <option value="friends-core">friends-core</option>
-                        <option value="friends-local">friends-local</option>
-                        <option value="friends-other">friends-other</option>
-                        <option value="family-core">family-core</option>
-                        <option value="family-other">family-other</option>
-                        <option value="work">work</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="frequency">Check-in every...</label>
-                    <div class="frequency-input">
-                        <input type="number" id="frequency" name="frequency" required min="1" value="7">
-                        <select id="unit" name="unit">
-                            <option value="days">Days</option>
-                            <option value="weeks">Weeks</option>
-                            <option value="months">Months</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" id="cancel-btn" class="secondary-btn">Cancel</button>
-                    <button type="submit" class="primary-btn">Save</button>
-                </div>
-            </form>
-        </dialog>
+
 
         <div id="toast" class="toast">
             <span class="toast-icon">✓</span>

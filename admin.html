@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage - Keepr</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <meta name="theme-color" content="#f5f5f5">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Work+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none; display: flex; align-items: center; gap: 12px;">
+                    <img src="icon-192.png" alt="Keepr Logo">
+                    <h1>Keepr</h1>
+                </a>
+            </div>
+
+            <!-- Back to home -->
+            <a href="index.html" class="icon-btn" aria-label="Back">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </a>
+        </header>
+
+        <div class="modal-header">
+            <h2>Manage People</h2>
+        </div>
+
+        <!-- Main Content for Admin -->
+        <main id="admin-list" class="admin-list" style="max-height: unset; overflow-y: visible;">
+            <!-- List will be populated here -->
+        </main>
+
+        <div class="admin-footer">
+            <button id="admin-add-btn" class="primary-btn" style="width: 100%">+ Add New Person</button>
+        </div>
+
+        <!-- Add/Edit Person Modal (Still needed as a popup for the form) -->
+        <dialog id="add-modal">
+            <form id="add-form" method="dialog">
+                <h2 id="modal-title">New person</h2>
+                <div class="input-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="e.g., Mom" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="label">Label (optional)</label>
+                    <select id="label" name="label">
+                        <option value="">None</option>
+                        <option value="friends-core">friends-core</option>
+                        <option value="friends-local">friends-local</option>
+                        <option value="friends-other">friends-other</option>
+                        <option value="family-core">family-core</option>
+                        <option value="family-other">family-other</option>
+                        <option value="work">work</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="frequency">Check-in every...</label>
+                    <div class="frequency-input">
+                        <input type="number" id="frequency" name="frequency" required min="1" value="7">
+                        <select id="unit" name="unit">
+                            <option value="days">Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-btn" class="secondary-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Save</button>
+                </div>
+            </form>
+        </dialog>
+
+        <div id="toast" class="toast">
+            <span class="toast-icon">✓</span>
+            <span id="toast-message">Action saved</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

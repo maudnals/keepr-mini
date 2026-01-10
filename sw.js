@@ -1,7 +1,8 @@
-const CACHE_NAME = 'keepr-v3';
+const CACHE_NAME = 'keepr-v4';
 const ASSETS = [
     './',
     './index.html',
+    './admin.html',
     './style.css',
     './app.js',
     './manifest.json',
