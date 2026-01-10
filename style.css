@@ -1,17 +1,21 @@
 :root {
-    --bg-color: #0d0d0d;
-    --card-bg: #1e1e1e;
-    --primary: #00e5ff;
-    /* Cyan Neon */
-    --secondary: #7c4dff;
-    /* Purple Neon */
-    --text-main: #ffffff;
-    --text-muted: #a0a0a0;
-    --danger: #ff4081;
-    --success: #00e676;
-    --font-family: 'Libre Baskerville', serif;
-    --radius: 6px;
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    --bg-color: #f9f0dc;
+    /* Warm paper yellow */
+    --card-bg: #ffffff;
+    --primary: #ffb74d;
+    /* Orange/Gold */
+    --secondary: #8d6e63;
+    /* Earthy brown */
+    --text-main: #3e2723;
+    /* Dark brown ink */
+    --text-muted: #8d6e63;
+    --danger: #ef5350;
+    --success: #66bb6a;
+    --font-heading: 'Caveat Brush', cursive;
+    --font-body: 'Work Sans', sans-serif;
+    --radius: 8px;
+    --border: 2px solid #3e2723;
+    --shadow: 4px 4px 0px rgba(62, 39, 35, 0.2);
 }
 
 * {
@@ -23,8 +27,10 @@
 
 body {
     background-color: var(--bg-color);
+    background-image: radial-gradient(#d7ccc8 1px, transparent 1px);
+    background-size: 20px 20px;
     color: var(--text-main);
-    font-family: var(--font-family);
+    font-family: var(--font-body);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -33,7 +39,7 @@ body {
 .app-container {
     width: 100%;
     max-width: 600px;
-    padding: 20px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -54,37 +60,43 @@ header {
 }
 
 .logo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: var(--border);
+    background: white;
 }
 
 .logo h1 {
-    font-weight: 600;
-    font-size: 1.5rem;
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 2rem;
+    color: var(--text-main);
+    letter-spacing: 0.5px;
 }
 
 .icon-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    padding: 10px;
+    background: white;
+    border: var(--border);
+    color: var(--text-main);
+    padding: 8px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    transition: transform 0.1s;
+    box-shadow: 2px 2px 0px rgba(62, 39, 35, 0.2);
 }
 
 .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0px rgba(62, 39, 35, 0.2);
+}
+
+.icon-btn:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0px rgba(62, 39, 35, 0.2);
 }
 
 main {
@@ -112,9 +124,9 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: var(--border);
+    box-shadow: var(--shadow);
     animation: fadeIn 0.3s ease-out;
-    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 @keyframes fadeIn {
@@ -130,13 +142,14 @@ main {
 }
 
 .person-info {
-    flex: 0 0 70%;
+    flex: 0 0 65%;
     min-width: 0;
 }
 
 .person-info h3 {
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 1.5rem;
     margin-bottom: 4px;
     display: flex;
     align-items: center;
@@ -144,85 +157,100 @@ main {
 }
 
 .badge {
-    font-size: 0.7rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    background: #fff3e0;
+    color: #e65100;
     padding: 2px 8px;
     border-radius: 12px;
-    font-weight: 400;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+    border: 1px solid #ffcc80;
 }
 
 .status-text {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
 .status-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--text-muted);
+    display: none;
+    /* Removed dot for cleaner paper look, relying on text/color */
 }
 
-.status-due .status-indicator {
-    background-color: var(--danger);
-    box-shadow: 0 0 8px var(--danger);
-}
-
-.status-ok .status-indicator {
-    background-color: var(--success);
-}
-
-.status-due {
+/* Status colors mainly via text or border accents if needed, 
+   but user asked for "friendly". 
+   Let's keep text colored for urgency. 
+*/
+.status-due .status-text {
     color: var(--danger);
+    font-weight: 600;
 }
 
 .checkin-btn {
+    font-family: var(--font-heading);
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: var(--border);
     color: var(--text-main);
-    padding: 8px 16px;
+    padding: 6px 16px;
     border-radius: 20px;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.1s;
+    box-shadow: 2px 2px 0 var(--text-main);
 }
 
 .status-due .checkin-btn {
-    background: rgba(255, 64, 129, 0.15);
+    background: #ffebee;
     border-color: var(--danger);
     color: var(--danger);
+    box-shadow: 2px 2px 0 var(--danger);
+}
+
+.checkin-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--text-main);
+}
+
+.status-due .checkin-btn:hover {
+    box-shadow: 4px 4px 0 var(--danger);
 }
 
 .checkin-btn:active {
-    transform: scale(0.95);
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 var(--text-main);
 }
+
 
 /* Modal */
 dialog {
-    background: #1a1a1a;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    color: var(--text-main);
+    border: var(--border);
     border-radius: var(--radius);
     padding: 24px;
     width: 90%;
     max-width: 400px;
     margin: auto;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    box-shadow: 8px 8px 0 rgba(62, 39, 35, 0.4);
 }
 
 dialog::backdrop {
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(4px);
+    background: rgba(62, 39, 35, 0.4);
+    backdrop-filter: blur(2px);
 }
 
 dialog h2 {
-    margin-bottom: 20px;
-    font-size: 1.25rem;
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 24px;
+    text-align: center;
+    border-bottom: 2px dashed #d7ccc8;
+    padding-bottom: 10px;
 }
 
 .input-group {
@@ -231,27 +259,29 @@ dialog h2 {
 
 .input-group label {
     display: block;
-    margin-bottom: 8px;
-    color: var(--text-muted);
+    margin-bottom: 6px;
+    color: var(--text-main);
+    font-weight: 600;
     font-size: 0.9rem;
 }
 
 input,
 select {
     width: 100%;
-    background: #2a2a2a;
-    border: 1px solid #333;
-    color: white;
+    background: #fff;
+    border: 2px solid #d7ccc8;
+    color: var(--text-main);
     padding: 12px;
-    border-radius: var(--radius);
+    border-radius: 8px;
     font-size: 1rem;
     font-family: inherit;
     outline: none;
+    transition: border-color 0.2s;
 }
 
 input:focus,
 select:focus {
-    border-color: var(--primary);
+    border-color: var(--text-main);
 }
 
 .frequency-input {
@@ -259,54 +289,63 @@ select:focus {
     gap: 10px;
 }
 
-.frequency-input input {
-    flex: 1;
-}
-
-.frequency-input select {
-    flex: 1;
-}
-
 .modal-actions {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    margin-top: 10px;
+    margin-top: 30px;
+    border-top: 2px dashed #d7ccc8;
+    padding-top: 20px;
 }
 
 button {
-    font-family: inherit;
-    font-size: 0.95rem;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
     cursor: pointer;
-    border: none;
-    border-radius: var(--radius);
-    padding: 12px 20px;
+    border: var(--border);
+    border-radius: 12px;
+    padding: 8px 24px;
+    transition: transform 0.1s;
 }
 
 .secondary-btn {
     background: transparent;
     color: var(--text-muted);
+    border: 2px solid transparent;
+}
+
+.secondary-btn:hover {
+    text-decoration: underline;
 }
 
 .primary-btn {
     background: var(--primary);
-    color: #000;
-    font-weight: 600;
+    color: var(--text-main);
+    box-shadow: 3px 3px 0 var(--text-main);
 }
 
-/* Toast Notification */
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 5px 5px 0 var(--text-main);
+}
+
+.primary-btn:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 var(--text-main);
+}
+
+/* Toast */
 .toast {
     position: fixed;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: rgba(30, 30, 30, 0.9);
-    color: white;
+    background: #3e2723;
+    color: #fffaf0;
     padding: 12px 24px;
     border-radius: 50px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 1000;
@@ -314,6 +353,7 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
+    font-family: var(--font-heading);
 }
 
 .toast.show {
