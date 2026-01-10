@@ -1,21 +1,26 @@
 :root {
-    --bg-color: #f9f0dc;
-    /* Warm paper yellow */
-    --card-bg: #ffffff;
-    --primary: #ffc600;
-    /* Orange/Gold */
-    --secondary: #8d6e63;
-    /* Earthy brown */
-    --text-main: #3e2723;
-    /* Dark brown ink */
-    --text-muted: #8d6e63;
-    --danger: #ef5350;
-    --success: #66bb6a;
+    --bg-color: #f8f9fa;
+    --text-main: #2c3e50;
+    --text-muted: #7f8c8d;
+    --border: 1px solid rgba(0, 0, 0, 0.08);
+    /* Softer border */
+    --radius: 12px;
+    /* More rounded */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
     --font-heading: 'Caveat Brush', cursive;
     --font-body: 'Work Sans', sans-serif;
-    --radius: 8px;
-    --border: 2px solid #3e2723;
-    --shadow: 4px 4px 0px rgba(62, 39, 35, 0.2);
+
+    /* Updated Palette */
+    --color-friends-core: #3FA7D6;
+    --color-friends-local: #59CD90;
+    --color-friends-other: #3fa6d6a8;
+    /* Lighter shade of friends-core */
+    --color-family-core: #FAC05E;
+    --color-family-other: #ffd895;
+    /* Lighter shade of family-core */
+    --color-work: #F79D84;
+    --color-default: #dce0e3;
 }
 
 * {
@@ -27,8 +32,6 @@
 
 body {
     background-color: var(--bg-color);
-    background-image: radial-gradient(#d7ccc8 1px, transparent 1px);
-    background-size: 20px 20px;
     color: var(--text-main);
     font-family: var(--font-body);
     height: 100vh;
@@ -49,7 +52,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     padding-top: 10px;
 }
 
@@ -60,11 +63,10 @@ header {
 }
 
 .logo img {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border: var(--border);
-    background: white;
+    object-fit: cover;
 }
 
 .logo h1 {
@@ -72,31 +74,30 @@ header {
     font-weight: 400;
     font-size: 2rem;
     color: var(--text-main);
-    letter-spacing: 0.5px;
 }
 
 .icon-btn {
     background: white;
-    border: var(--border);
+    border: 1px solid #eee;
     color: var(--text-main);
-    padding: 8px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.1s;
-    box-shadow: 2px 2px 0px rgba(62, 39, 35, 0.2);
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .icon-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 4px 4px 0px rgba(62, 39, 35, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .icon-btn:active {
-    transform: translateY(1px);
-    box-shadow: 1px 1px 0px rgba(62, 39, 35, 0.2);
+    transform: scale(0.95);
 }
 
 main {
@@ -104,8 +105,8 @@ main {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding-bottom: 20px;
+    gap: 12px;
+    padding: 10px 15px;
 }
 
 .empty-state {
@@ -118,15 +119,46 @@ main {
 }
 
 .person-card {
-    background: var(--card-bg);
+    background: var(--color-default);
     border-radius: var(--radius);
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr 15fr 1fr;
     align-items: center;
-    border: var(--border);
+    gap: 12px;
+    border: none;
     box-shadow: var(--shadow);
     animation: fadeIn 0.3s ease-out;
+    transition: transform 0.2s;
+}
+
+.person-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Category Colors */
+.person-card.cat-friends-core {
+    background-color: var(--color-friends-core);
+}
+
+.person-card.cat-friends-local {
+    background-color: var(--color-friends-local);
+}
+
+.person-card.cat-friends-other {
+    background-color: var(--color-friends-other);
+}
+
+.person-card.cat-family-core {
+    background-color: var(--color-family-core);
+}
+
+.person-card.cat-family-other {
+    background-color: var(--color-family-other);
+}
+
+.person-card.cat-work {
+    background-color: var(--color-work);
 }
 
 @keyframes fadeIn {
@@ -142,99 +174,88 @@ main {
 }
 
 .person-info {
-    flex: 0 0 65%;
-    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .person-info h3 {
     font-family: var(--font-heading);
     font-weight: 400;
-    font-size: 1.5rem;
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-h3 div {
-    display: flex;
-    align-items: center;
-}
-
-.badge {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    background: whitesmoke;
+    font-size: 1.6rem;
     color: var(--text-main);
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-    border: 1px solid var(--text-main);
+    line-height: 1.1;
 }
 
 .status-text {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--text-main);
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
-.status-indicator {
-    display: none;
-    /* Removed dot for cleaner paper look, relying on text/color */
-}
-
-/* Status colors mainly via text or border accents if needed, 
-   but user asked for "friendly". 
-   Let's keep text colored for urgency. 
-*/
 .status-due .status-text {
-    color: var(--danger);
+    color: #ff211c;
+    /* Red for overdue */
     font-weight: 600;
 }
 
-.checkin-btn {
-    font-family: var(--font-heading);
-    background: transparent;
-    border: var(--border);
+.badge {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(255, 255, 255, 0.6);
     color: var(--text-main);
-    padding: 6px 16px;
+    padding: 4px 10px;
     border-radius: 20px;
-    font-size: 1.1rem;
+    font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    white-space: nowrap;
+}
+
+/* Round Checkbox */
+.round-checkbox {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    transition: all 0.1s;
-    box-shadow: 2px 2px 0 var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: transparent;
 }
 
-.checkin-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 0 var(--text-main);
+.round-checkbox:hover {
+    border-color: var(--text-main);
+    /* Highlight */
+    background: white;
 }
 
-.checkin-btn:active {
-    transform: translateY(1px);
-    box-shadow: 1px 1px 0 var(--text-main);
+.round-checkbox:active {
+    transform: scale(0.9);
+    background: var(--text-main);
+    border-color: var(--text-main);
 }
-
 
 /* Modal */
 dialog {
     background: #ffffff;
     color: var(--text-main);
-    border: var(--border);
-    border-radius: var(--radius);
+    border: none;
+    border-radius: 24px;
     padding: 24px;
     width: 90%;
-    max-width: 400px;
+    max-width: 480px;
     margin: auto;
-    box-shadow: 8px 8px 0 rgba(62, 39, 35, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 dialog::backdrop {
-    background: rgba(62, 39, 35, 0.4);
-    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
 }
 
 dialog h2 {
@@ -243,8 +264,6 @@ dialog h2 {
     font-weight: 400;
     margin-bottom: 24px;
     text-align: center;
-    border-bottom: 2px dashed #d7ccc8;
-    padding-bottom: 10px;
 }
 
 .input-group {
@@ -253,7 +272,7 @@ dialog h2 {
 
 .input-group label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     color: var(--text-main);
     font-weight: 600;
     font-size: 0.9rem;
@@ -262,11 +281,11 @@ dialog h2 {
 input,
 select {
     width: 100%;
-    background: #fff;
-    border: 2px solid #d7ccc8;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
     color: var(--text-main);
-    padding: 12px;
-    border-radius: 8px;
+    padding: 14px;
+    border-radius: 12px;
     font-size: 1rem;
     font-family: inherit;
     outline: none;
@@ -276,6 +295,7 @@ select {
 input:focus,
 select:focus {
     border-color: var(--text-main);
+    background: white;
 }
 
 .frequency-input {
@@ -285,48 +305,37 @@ select:focus {
 
 .modal-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 12px;
     margin-top: 30px;
-    border-top: 2px dashed #d7ccc8;
-    padding-top: 20px;
 }
 
-button {
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
+button.primary-btn,
+button.secondary-btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    border: var(--border);
-    border-radius: 20px;
-    padding: 8px 24px;
+    border-radius: 12px;
+    padding: 12px 24px;
     transition: transform 0.1s;
-    text-transform: uppercase;
+    border: none;
+    width: 100%;
 }
 
 .secondary-btn {
-    background: transparent;
-    color: var(--text-muted);
-    border: 2px solid transparent;
-}
-
-.secondary-btn:hover {
-    text-decoration: underline;
+    background: #f5f5f5;
+    color: var(--text-main);
 }
 
 .primary-btn {
-    background: var(--primary);
-    color: var(--text-main);
-    box-shadow: 3px 3px 0 var(--text-main);
+    background: #2c3e50;
+    color: white;
 }
 
-.primary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 5px 5px 0 var(--text-main);
-}
-
-.primary-btn:active {
-    transform: translateY(1px);
-    box-shadow: 1px 1px 0 var(--text-main);
+.primary-btn:active,
+.secondary-btn:active {
+    transform: scale(0.98);
 }
 
 /* Toast */
@@ -335,12 +344,12 @@ button {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #3e2723;
-    color: #fffaf0;
+    background: #2c3e50;
+    color: white;
     padding: 12px 24px;
     border-radius: 50px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    font-size: 1rem;
+    font-size: 0.95rem;
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 1000;
@@ -348,7 +357,8 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
+    font-weight: 500;
 }
 
 .toast.show {
@@ -357,5 +367,86 @@ button {
 }
 
 .toast-icon {
-    color: var(--success);
+    color: #4CAF50;
+}
+
+/* Admin Interface */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+}
+
+.icon-btn-small {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.icon-btn-small:hover {
+    color: var(--text-main);
+    background: #eee;
+}
+
+.admin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.admin-item {
+    background: #f8f9fa;
+    border: 1px solid #eee;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-item-name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.admin-item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.admin-action-btn {
+    background: white;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    color: var(--text-muted);
+}
+
+.admin-action-btn:hover {
+    color: var(--text-main);
+    border-color: #bbb;
+}
+
+.admin-action-btn.delete:hover {
+    color: #e53935;
+    border-color: #ef9a9a;
+}
+
+.admin-footer {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
 }

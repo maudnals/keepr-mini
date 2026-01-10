@@ -23,11 +23,14 @@
                 <img src="icon-192.png" alt="Keepr Logo">
                 <h1>Keepr</h1>
             </div>
-            <button id="add-btn" class="icon-btn" aria-label="Add Person">
+
+            <button id="admin-btn" class="icon-btn" aria-label="Admin Interface" style="margin-left: 8px;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                    </path>
                 </svg>
             </button>
         </header>
@@ -40,10 +43,24 @@
             </div>
         </main>
 
-        <!-- Add Person Modal -->
+        <!-- Admin Modal -->
+        <dialog id="admin-modal">
+            <div class="modal-header">
+                <h2>Manage People</h2>
+                <button id="admin-close-btn" class="icon-btn-small" aria-label="Close">✕</button>
+            </div>
+            <div id="admin-list" class="admin-list">
+                <!-- List will be populated here -->
+            </div>
+            <div class="admin-footer">
+                <button id="admin-add-btn" class="primary-btn" style="width: 100%">+ Add New Person</button>
+            </div>
+        </dialog>
+
+        <!-- Add/Edit Person Modal -->
         <dialog id="add-modal">
             <form id="add-form" method="dialog">
-                <h2>New person</h2>
+                <h2 id="modal-title">New person</h2>
                 <div class="input-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required placeholder="e.g., Mom" autocomplete="off">
