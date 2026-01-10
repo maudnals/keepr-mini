@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keepr</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <meta name="theme-color" content="#121212">
+    <!-- Google Fonts for premium feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <img src="icon-192.png" alt="Keepr Logo">
+                <h1>Keepr</h1>
+            </div>
+            <button id="add-btn" class="icon-btn" aria-label="Add Person">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+        </header>
+
+        <main id="person-list">
+            <!-- Dynamic Content -->
+            <div class="empty-state" id="empty-state">
+                <p>No connections yet.</p>
+                <p class="sub-text">Add someone to start keeping in touch.</p>
+            </div>
+        </main>
+
+        <!-- Add Person Modal -->
+        <dialog id="add-modal">
+            <form id="add-form" method="dialog">
+                <h2>New Connection</h2>
+                <div class="input-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="e.g., Mom" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="frequency">Check-in every...</label>
+                    <div class="frequency-input">
+                        <input type="number" id="frequency" name="frequency" required min="1" value="7">
+                        <select id="unit" name="unit">
+                            <option value="days">Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-btn" class="secondary-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Save</button>
+                </div>
+            </form>
+        </dialog>
+
+        <div id="toast" class="toast">
+            <span class="toast-icon">✓</span>
+            <span id="toast-message">Action saved</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('SW Registered'))
+                .catch(err => console.log('SW Error', err));
+        }
+    </script>
+</body>
+
+</html>
