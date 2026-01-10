@@ -2,7 +2,7 @@
     --bg-color: #f9f0dc;
     /* Warm paper yellow */
     --card-bg: #ffffff;
-    --primary: #ffb74d;
+    --primary: #ffc600;
     /* Orange/Gold */
     --secondary: #8d6e63;
     /* Earthy brown */
@@ -156,15 +156,20 @@ main {
     gap: 8px;
 }
 
+h3 div {
+    display: flex;
+    align-items: center;
+}
+
 .badge {
     font-family: var(--font-body);
     font-size: 0.75rem;
-    background: #fff3e0;
-    color: #e65100;
+    background: whitesmoke;
+    color: var(--text-main);
     padding: 2px 8px;
     border-radius: 12px;
     font-weight: 600;
-    border: 1px solid #ffcc80;
+    border: 1px solid var(--text-main);
 }
 
 .status-text {
@@ -203,20 +208,9 @@ main {
     box-shadow: 2px 2px 0 var(--text-main);
 }
 
-.status-due .checkin-btn {
-    background: #ffebee;
-    border-color: var(--danger);
-    color: var(--danger);
-    box-shadow: 2px 2px 0 var(--danger);
-}
-
 .checkin-btn:hover {
     transform: translateY(-2px);
     box-shadow: 4px 4px 0 var(--text-main);
-}
-
-.status-due .checkin-btn:hover {
-    box-shadow: 4px 4px 0 var(--danger);
 }
 
 .checkin-btn:active {
@@ -303,9 +297,10 @@ button {
     font-size: 1.1rem;
     cursor: pointer;
     border: var(--border);
-    border-radius: 12px;
+    border-radius: 20px;
     padding: 8px 24px;
     transition: transform 0.1s;
+    text-transform: uppercase;
 }
 
 .secondary-btn {

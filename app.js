@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.innerHTML = `
                     <div class="person-info">
                         <h3>
-                            ${person.name} 
-                            ${person.label ? `<span class="badge">${person.label}</span>` : ''}
+                            <div>${person.name} </div>
+                            <div>${person.label ? `<span class="badge">${person.label}</span>` : ''}</div>
                         </h3>
                         <div class="status-text">
                             <div class="status-indicator"></div>
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="checkin-btn" onclick="checkIn(${index})">
                         Done
                     </button>
-                    <button class="secondary-btn" style="padding: 4px 8px; margin-left:8px; opacity:0.3;" onclick="deletePerson(${index})">x</button>
+
                 `;
                 personList.appendChild(card);
 
@@ -130,12 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast(msg);
     };
 
-    window.deletePerson = (index) => {
-        if (confirm('Remove this person?')) {
-            people.splice(index, 1);
-            savePeople();
-        }
-    }
+
 
     function showToast(message) {
         const toast = document.getElementById('toast');
