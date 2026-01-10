@@ -66,7 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 card.innerHTML = `
                     <div class="person-info">
-                        <h3>${person.name}</h3>
+                        <h3>
+                            ${person.name} 
+                            ${person.label ? `<span class="badge">${person.label}</span>` : ''}
+                        </h3>
                         <div class="status-text">
                             <div class="status-indicator"></div>
                             <span>${statusText}</span>
@@ -97,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const formData = new FormData(addForm);
         const name = formData.get('name');
+        const label = formData.get('label');
         let frequency = parseInt(formData.get('frequency'));
         const unit = formData.get('unit');
 
@@ -105,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         people.push({
             name,
+            label,
             frequency, // stored in days
             lastCheckin: new Date().toISOString()
         });

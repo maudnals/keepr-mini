@@ -9,8 +9,8 @@
     --text-muted: #a0a0a0;
     --danger: #ff4081;
     --success: #00e676;
-    --font-family: 'Outfit', sans-serif;
-    --radius: 16px;
+    --font-family: 'Libre Baskerville', serif;
+    --radius: 6px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -129,10 +129,28 @@ main {
     }
 }
 
+.person-info {
+    flex: 0 0 70%;
+    min-width: 0;
+}
+
 .person-info h3 {
     font-weight: 600;
     font-size: 1.1rem;
     margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.badge {
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 400;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .status-text {
@@ -189,7 +207,7 @@ dialog {
     background: #1a1a1a;
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    border-radius: var(--radius);
     padding: 24px;
     width: 90%;
     max-width: 400px;
@@ -225,7 +243,7 @@ select {
     border: 1px solid #333;
     color: white;
     padding: 12px;
-    border-radius: 12px;
+    border-radius: var(--radius);
     font-size: 1rem;
     font-family: inherit;
     outline: none;
@@ -261,7 +279,7 @@ button {
     font-size: 0.95rem;
     cursor: pointer;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius);
     padding: 12px 20px;
 }
 

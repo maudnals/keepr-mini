@@ -8,11 +8,12 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="icon-192.png">
-    <meta name="theme-color" content="#121212">
+    <meta name="theme-color" content="#f5f5f5">
     <!-- Google Fonts for premium feel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -46,6 +47,18 @@
                 <div class="input-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required placeholder="e.g., Mom" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="label">Label (optional)</label>
+                    <select id="label" name="label">
+                        <option value="">None</option>
+                        <option value="friends-core">friends-core</option>
+                        <option value="friends-local">friends-local</option>
+                        <option value="friends-other">friends-other</option>
+                        <option value="family-core">family-core</option>
+                        <option value="family-other">family-other</option>
+                        <option value="work">work</option>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label for="frequency">Check-in every...</label>
