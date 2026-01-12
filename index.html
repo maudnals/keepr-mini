@@ -24,14 +24,14 @@
                 <h1>Keepr</h1>
             </div>
 
-            <a href="admin.html" id="admin-btn" class="secondary-btn" aria-label="Manage People"
-                style="margin-left: 8px; text-decoration: none; font-size: 0.9rem; padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1);">
-                Manage People
+            <a href="admin.html" id="admin-btn" class="secondary-btn" aria-label="Manage people"
+                style="margin-left: 8px;">
+                Manage people
             </a>
         </header>
 
         <div class="tabs" style="display: flex; gap: 8px; margin-bottom: 16px;">
-            <button id="tab-overdue" class="tab-btn active">Check-in Overdue</button>
+            <button id="tab-overdue" class="tab-btn active">Check-in overdue</button>
             <button id="tab-ontrack" class="tab-btn">On Track</button>
         </div>
 
@@ -43,14 +43,49 @@
             </div>
         </main>
 
-        <!-- Add/Edit Person Modal (Kept only if needed, but simplified if index is just view) -->
-        <!-- Logic is mostly on Admin now, but we removed add-btn. 
-             However, if checking in is the only action, index.html doesn't need the form modal anymore per se, 
-             UNLESS checkin logic ever needed it (it doesn't).
-             Wait, deleting 'admin-modal' block but we also need to see if 'add-modal' is needed in index.html.
-             If index.html is strictly view/checkin, it doesn't need to add/edit.
-             So we can remove add-modal from index.html entirely.
-        -->
+        <!-- Add/Edit Person Modal -->
+        <dialog id="add-modal">
+            <div class="modal-header">
+                <h2 id="modal-title">New Person</h2>
+            </div>
+            <form id="add-form">
+                <div class="input-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="e.g. Grandma">
+                </div>
+
+                <div class="input-group">
+                    <label for="label">Category (optional)</label>
+                    <select id="label" name="label">
+                        <option value="">None</option>
+                        <option value="friends-core">Close Friends</option>
+                        <option value="friends-local">Local Friends</option>
+                        <option value="friends-other">Other Friends</option>
+                        <option value="family-core">Iconic Family</option>
+                        <option value="family-other">Extended Family</option>
+                        <option value="work">Work / Network</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>How often?</label>
+                    <div class="frequency-input">
+                        <input type="number" name="frequency" id="frequency" required min="1" value="7"
+                            style="flex: 1;">
+                        <select name="unit" id="unit" style="flex: 1;">
+                            <option value="days">Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="cancel-btn" class="secondary-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Save</button>
+                </div>
+            </form>
+        </dialog>
 
 
 

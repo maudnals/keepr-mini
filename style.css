@@ -122,7 +122,7 @@ main {
     border-radius: var(--radius);
     padding: 16px 20px;
     display: grid;
-    grid-template-columns: 1fr 15fr 1fr;
+    grid-template-columns: auto 1fr auto auto;
     align-items: center;
     gap: 12px;
     border: none;
@@ -206,11 +206,10 @@ main {
 .badge {
     font-family: var(--font-body);
     font-size: 0.7rem;
-    text-transform: uppercase;
     letter-spacing: 0.5px;
     background: rgba(255, 255, 255, 0.6);
     color: var(--text-main);
-    padding: 4px 10px;
+    padding: 3px 8px;
     border-radius: 20px;
     font-weight: 600;
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -314,8 +313,12 @@ select:focus {
     margin-top: 30px;
 }
 
-button.primary-btn,
-button.secondary-btn {
+.modal-actions button {
+    flex: 1;
+}
+
+.primary-btn,
+.secondary-btn {
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 1rem;
@@ -324,12 +327,16 @@ button.secondary-btn {
     padding: 12px 24px;
     transition: transform 0.1s;
     border: none;
-    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
 .secondary-btn {
     background: #f5f5f5;
     color: var(--text-main);
+    border: 1px solid #c8d2db;
 }
 
 .primary-btn {
@@ -488,4 +495,83 @@ button.secondary-btn {
 .section-header {
     display: none;
     /* Hide section headers as tabs replace them */
+}
+
+/* Kebab Menu items */
+.kebab-menu-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.kebab-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0 8px;
+    border-radius: 50%;
+    width: 32px;
+    /* Ensure visual size */
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kebab-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-main);
+}
+
+.kebab-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 140px;
+    z-index: 100;
+    overflow: hidden;
+    display: none;
+    /* JS will toggle this */
+    flex-direction: column;
+    padding: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.kebab-dropdown.show {
+    display: flex;
+    animation: fadeIn 0.1s ease-out;
+}
+
+.kebab-item {
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 8px;
+    color: var(--text-main);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.kebab-item:hover {
+    background: #f8f9fa;
+}
+
+.kebab-item.delete {
+    color: #e53935;
+}
+
+.kebab-item.delete:hover {
+    background: #FFEBEE;
 }
