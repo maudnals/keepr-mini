@@ -165,9 +165,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('div');
             item.className = 'admin-item';
 
-            let freqText = `${person.frequency} day(s)`;
-            if (person.frequency % 30 === 0) freqText = `${person.frequency / 30} month(s)`;
-            else if (person.frequency % 7 === 0) freqText = `${person.frequency / 7} week(s)`;
+            let freqText;
+            if (person.frequency === 1) freqText = 'Daily';
+            else if (person.frequency === 7) freqText = 'Weekly';
+            else if (person.frequency === 30) freqText = 'Monthly';
+            else {
+                let count = person.frequency;
+                let unit = 'days';
+                if (count % 30 === 0) { count /= 30; unit = 'months'; }
+                else if (count % 7 === 0) { count /= 7; unit = 'weeks'; }
+                freqText = `Every ${count} ${unit}`;
+            }
 
             item.innerHTML = `
                 <div class="person-info" style="flex:1">
@@ -176,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${person.label ? `<span class="badge" style="margin-left:8px; font-size:0.7em; padding: 1px 6px;">${person.label}</span>` : ''}
                     </div>
                     <div style="font-size: 0.8rem; color: var(--text-muted);">
-                        Every ${freqText}
+                        ${freqText}
                     </div>
                 </div>
                 <div class="admin-item-actions">
