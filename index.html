@@ -55,6 +55,19 @@
                 </div>
 
                 <div class="input-group">
+                    <label>How often?</label>
+                    <div class="frequency-input">
+                        <input type="number" name="frequency" id="frequency" required min="1" value="7"
+                            style="flex: 1;">
+                        <select name="unit" id="unit" style="flex: 1;">
+                            <option value="days">Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
                     <label for="label">Category (optional)</label>
                     <select id="label" name="label">
                         <option value="">None</option>
@@ -68,16 +81,9 @@
                 </div>
 
                 <div class="input-group">
-                    <label>How often?</label>
-                    <div class="frequency-input">
-                        <input type="number" name="frequency" id="frequency" required min="1" value="7"
-                            style="flex: 1;">
-                        <select name="unit" id="unit" style="flex: 1;">
-                            <option value="days">Days</option>
-                            <option value="weeks">Weeks</option>
-                            <option value="months">Months</option>
-                        </select>
-                    </div>
+                    <label for="notes">Notes (optional)</label>
+                    <textarea id="notes" name="notes" rows="3" style="width: 100%;"
+                        placeholder="Add some notes..."></textarea>
                 </div>
 
                 <div class="modal-actions">

@@ -131,6 +131,12 @@ main {
     transition: transform 0.2s;
 }
 
+.person-card .person-name-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .person-card:hover {
     transform: translateY(-2px);
 }
@@ -282,7 +288,8 @@ dialog h2 {
 }
 
 input,
-select {
+select,
+textarea {
     width: 100%;
     background: #f8f9fa;
     border: 1px solid #e0e0e0;
@@ -296,9 +303,44 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
     border-color: var(--text-main);
     background: white;
+}
+
+textarea {
+    resize: none;
+}
+
+.person-notes {
+    grid-column: 2 / -1;
+    /* Align with name, span to end */
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    cursor: pointer;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    /* Show 1 line initially */
+    line-clamp: 1;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.person-notes.expanded {
+    -webkit-line-clamp: unset;
+    /* Show all lines */
+    line-clamp: none;
+    white-space: pre-wrap;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 8px;
 }
 
 .frequency-input {

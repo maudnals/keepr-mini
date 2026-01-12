@@ -86,19 +86,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const lastDate = dateFormatter.format(new Date(person.lastCheckin));
                 const dateText = isDue ? `✳︎ Due ${formattedDate}` : `Next: ${formattedDate}`;
 
+                const notesHtml = person.notes ? `<div class="person-notes" onclick="event.stopPropagation(); this.classList.toggle('expanded')">${person.notes}</div>` : '';
+
                 card.innerHTML = `
                     <button class="round-checkbox" onclick="checkIn(${index})" aria-label="Mark done"></button>
                     <div class="person-info">
-                        <h3>${person.name}</h3>
+                        <div class="person-name-label">
+                            <h3>${person.name}</h3>
+                            ${person.label ? `<div class="badge">${person.label.replace('-', ' ')}</div>` : '<div></div>'}
+                        </div>
                         <div class="status-text">
                             ${dateText}
                         </div>
                         <div class="status-text last-check-in">
                             Last: ${lastDate}
                         </div>
+                        ${notesHtml}
                     </div>
-                    
-                    ${person.label ? `<div class="badge">${person.label.replace('-', ' ')}</div>` : '<div></div>'}
 
                     <div class="kebab-menu-container">
                         <button class="kebab-btn" onclick="toggleMenu(event, ${index})" aria-label="Options">
@@ -201,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modalTitle.textContent = "Edit Person";
             addForm.name.value = person.name;
             addForm.label.value = person.label || '';
+            if (addForm.notes) addForm.notes.value = person.notes || ''; // Populate notes
 
             let freq = person.frequency;
             let unit = 'days';
@@ -232,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(addForm);
             const name = formData.get('name');
             const label = formData.get('label');
+            const notes = formData.get('notes'); // Get notes
             let frequency = parseInt(formData.get('frequency'));
             const unit = formData.get('unit');
 
@@ -242,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Update
                 people[editingIndex].name = name;
                 people[editingIndex].label = label;
+                people[editingIndex].notes = notes; // Update notes
                 people[editingIndex].frequency = frequency;
                 showToast('Person updated');
             } else {
@@ -249,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 people.push({
                     name,
                     label,
+                    notes, // Save notes
                     frequency,
                     lastCheckin: new Date().toISOString()
                 });
