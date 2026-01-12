@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminList = document.getElementById('admin-list');
     const adminAddBtn = document.getElementById('admin-add-btn');
 
+    // Tabs logic
+    const tabOverdue = document.getElementById('tab-overdue');
+    const tabOntrack = document.getElementById('tab-ontrack');
+    let activeTab = 'overdue'; // 'overdue' or 'ontrack'
+
     // Modal Elements (likely only on Admin page)
     const addModal = document.getElementById('add-modal');
     const addForm = document.getElementById('add-form');
@@ -37,13 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!personList) return;
 
         // Clear list but keep empty state
-        const items = personList.querySelectorAll('.person-card');
+        const items = personList.querySelectorAll('.person-card, .section-header, .tab-empty-msg');
         items.forEach(i => i.remove());
 
+        // Handle global empty state (no people at all)
         if (people.length === 0) {
             emptyState.style.display = 'flex';
+            if (tabOverdue) tabOverdue.parentElement.style.display = 'none'; // Hide tabs if no people
         } else {
             emptyState.style.display = 'none';
+            if (tabOverdue) tabOverdue.parentElement.style.display = 'flex'; // Show tabs
 
             // Sort by overdue status
             people.sort((a, b) => {
@@ -54,6 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric' });
 
+            let hasVisibleItems = false;
+
             people.forEach((person, index) => {
                 const dueDate = calculateDueDate(person.lastCheckin, person.frequency);
                 const now = new Date();
@@ -61,6 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 compareDate.setHours(23, 59, 59, 999);
 
                 const isDue = now > compareDate;
+
+                // Filtering based on Active Tab
+                if (activeTab === 'overdue' && !isDue) return;
+                if (activeTab === 'ontrack' && isDue) return;
+
+                hasVisibleItems = true;
 
                 const card = document.createElement('div');
                 const categoryClass = person.label ? `cat-${person.label}` : '';
@@ -84,9 +100,40 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     ${person.label ? `<div class="badge">${person.label.replace('-', ' ')}</div>` : '<div></div>'}
                 `;
+
                 personList.appendChild(card);
             });
+
+            // Tab specific empty state
+            if (!hasVisibleItems) {
+                const msg = document.createElement('div');
+                msg.className = 'tab-empty-msg';
+                msg.style.textAlign = 'center';
+                msg.style.marginTop = '40px';
+                msg.style.color = 'var(--text-muted)';
+                msg.innerHTML = activeTab === 'overdue'
+                    ? '<p>You\'re all caught up! 🎉</p>'
+                    : '<p>No one is officially "on track" (check overdue?).</p>';
+                personList.appendChild(msg);
+            }
         }
+    }
+
+    // Tab Switching Logic
+    if (tabOverdue && tabOntrack) {
+        tabOverdue.addEventListener('click', () => {
+            activeTab = 'overdue';
+            tabOverdue.classList.add('active');
+            tabOntrack.classList.remove('active');
+            render();
+        });
+
+        tabOntrack.addEventListener('click', () => {
+            activeTab = 'ontrack';
+            tabOntrack.classList.add('active');
+            tabOverdue.classList.remove('active');
+            render();
+        });
     }
 
     // --- Admin View Logic ---

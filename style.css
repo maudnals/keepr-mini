@@ -450,7 +450,42 @@ button.secondary-btn {
     border-color: #ef9a9a;
 }
 
+
 .admin-footer {
     border-top: 1px solid #eee;
     padding-top: 20px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    background: #eef1f5;
+    padding: 4px;
+    border-radius: 50px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    border-radius: 40px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+}
+
+.tab-btn.active {
+    background: white;
+    color: var(--text-main);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+    display: none;
+    /* Hide section headers as tabs replace them */
 }
