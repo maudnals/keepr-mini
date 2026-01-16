@@ -1,7 +1,7 @@
 :root {
     --bg-color: #f8f9fa;
-    --text-main: #2c3e50;
-    --text-muted: #7f8c8d;
+    --text-main: #1b2733;
+    --text-muted: #536263;
     --border: 1px solid rgba(0, 0, 0, 0.08);
     /* Softer border */
     --radius: 12px;
@@ -9,11 +9,11 @@
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
     --font-heading: 'Caveat Brush', cursive;
-    --font-body: 'Work Sans', sans-serif;
+    --font-body: system-ui, 'Work Sans', sans-serif;
 
     /* Updated Palette */
-    --color-friends-core: #3FA7D6;
-    --color-friends-local: #59CD90;
+    --color-friends-core: #6ec2e7;
+    --color-friends-local: #59cd90d6;
     --color-friends-other: #3fa6d6a8;
     /* Lighter shade of friends-core */
     --color-family-core: #FAC05E;
