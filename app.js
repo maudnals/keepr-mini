@@ -86,10 +86,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 const lastDate = dateFormatter.format(new Date(person.lastCheckin));
                 const dateText = isDue ? `✳︎ Due ${formattedDate}` : `Next: ${formattedDate}`;
 
-                const notesHtml = person.notes ? `<div class="person-notes" onclick="event.stopPropagation(); this.classList.toggle('expanded')">${person.notes}</div>` : '';
+                // Calculate frequency text
+                let freqText;
+                if (person.frequency === 1) freqText = 'Daily';
+                else if (person.frequency === 7) freqText = 'Weekly';
+                else if (person.frequency === 30) freqText = 'Monthly';
+                else {
+                    let count = person.frequency;
+                    let unit = 'days';
+                    if (count % 30 === 0) { count /= 30; unit = 'months'; }
+                    else if (count % 7 === 0) { count /= 7; unit = 'weeks'; }
+                    freqText = `Every ${count} ${unit}`;
+                }
+
+                // Notes - no separate onclick, handled by card expansion
+                const notesHtml = person.notes ? `<div class="person-notes">${person.notes}</div>` : '';
+
+                card.onclick = function () { this.classList.toggle('expanded'); };
 
                 card.innerHTML = `
-                    <button class="round-checkbox" onclick="checkIn(${index})" aria-label="Mark done"></button>
+                    <button class="round-checkbox" onclick="event.stopPropagation(); checkIn(${index})" aria-label="Mark done"></button>
                     <div class="person-info">
                         <div class="person-name-label">
                             <h3>${person.name}</h3>
@@ -98,10 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="status-text">
                             ${dateText}
                         </div>
-                        <div class="status-text last-check-in">
-                            Last: ${lastDate}
-                        </div>
                         ${notesHtml}
+                        <div class="card-details">
+                            <div>Target: ${freqText}</div>
+                            <div>Last check-in: ${lastDate}</div>
+                        </div>
                     </div>
 
                     <div class="kebab-menu-container">
