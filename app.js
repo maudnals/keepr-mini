@@ -161,7 +161,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderAdmin() {
         if (!adminList) return;
         adminList.innerHTML = '';
-        people.forEach((person, index) => {
+
+        // Create a sorted list with original indices to ensure actions target correct person
+        const sortedPeople = people.map((p, i) => ({ ...p, originalIndex: i }))
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+        sortedPeople.forEach((personWithIndex) => {
+            const person = people[personWithIndex.originalIndex]; // Get original ref or use copy
+            const index = personWithIndex.originalIndex;
+
             const item = document.createElement('div');
             item.className = 'admin-item';
 
