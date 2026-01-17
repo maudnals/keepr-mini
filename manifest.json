@@ -1,6 +1,6 @@
 {
-  "name": "Keepr",
-  "short_name": "Keepr",
+  "name": "keepr",
+  "short_name": "keepr",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f9f7dc",

@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         ${notesHtml}
                         <div class="card-details">
-                            <div>Target check-in frequency: ${freqText}</div>
+                            <div>Goal: ${freqText}</div>
                             <div>Last check-in: ${lastDate}</div>
                         </div>
                     </div>

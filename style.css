@@ -2,7 +2,7 @@
     --radius: 12px;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
-    --font-heading: 'Caveat Brush', cursive;
+    --font-heading: 'Fuzzy Bubbles', cursive;
     --font-body: system-ui, 'Work Sans', sans-serif;
 
     /* Light Theme */
@@ -15,7 +15,7 @@
     --color-default: #dce0e3;
 
     --color-friends-core: #6ec2e7;
-    --color-friends-local: #59cd90d6;
+    --color-friends-local: #6cd79ed6;
     --color-friends-other: #3fa6d6a8;
     --color-family-core: #FAC05E;
     --color-family-other: #ffd895;
@@ -112,9 +112,10 @@ header {
 
 .logo h1 {
     font-family: var(--font-heading);
-    font-weight: 400;
-    font-size: 2rem;
     color: var(--text-main);
+    font-size: 1.3rem;
+    font-weight: 800;
+
 }
 
 .icon-btn {
