@@ -330,6 +330,66 @@ textarea {
     line-clamp: 1;
     transition: all 0.3s ease;
     width: 100%;
+    outline: none;
+    /* Clean edit feel */
+}
+
+.person-notes:empty::before {
+    content: 'Add a note...';
+    color: var(--text-muted);
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.note-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.note-actions {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: none;
+    gap: 8px;
+    z-index: 5;
+}
+
+.note-wrapper:focus-within .note-actions {
+    display: flex;
+    animation: fadeIn 0.2s;
+}
+
+.note-btn {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.note-btn-save {
+    background: var(--text-main);
+    color: white;
+}
+
+.note-btn-discard {
+    background: white;
+    color: var(--text-muted);
+    border: 1px solid #eee;
+}
+
+.note-btn-discard:hover {
+    background: #f5f5f5;
+}
+
+.note-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #ccc;
+    color: #666;
+    box-shadow: none;
 }
 
 .person-card.expanded .person-notes {
@@ -339,8 +399,18 @@ textarea {
     white-space: pre-wrap;
     background: rgba(255, 255, 255, 0.5);
     padding: 8px;
+    padding-bottom: 34px;
+    /* Space for save button */
     border-radius: 8px;
     margin-top: 8px;
+    cursor: text;
+    border: 1px dashed rgba(0, 0, 0, 0.1);
+    /* Hint interactivity */
+}
+
+.person-card.expanded .person-notes:focus {
+    background: white;
+    border-color: var(--color-friends-core);
 }
 
 .card-details {

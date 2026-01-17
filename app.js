@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Data
     let people = JSON.parse(localStorage.getItem('keepr_people')) || [];
     let editingIndex = null;
+    let expandedIndices = new Set();
 
     // --- Core Logic ---
 
@@ -82,6 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const categoryClass = person.label ? `cat-${person.label}` : '';
                 card.className = `person-card ${categoryClass} ${isDue ? 'status-due' : ''}`;
 
+                if (expandedIndices.has(index)) {
+                    card.classList.add('expanded');
+                }
+
                 const formattedDate = dateFormatter.format(dueDate);
                 const lastDate = dateFormatter.format(new Date(person.lastCheckin));
                 const dateText = isDue ? `✳︎ Due ${formattedDate}` : `Next: ${formattedDate}`;
@@ -99,10 +104,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     freqText = `Every ${count} ${unit}`;
                 }
 
-                // Notes - no separate onclick, handled by card expansion
-                const notesHtml = person.notes ? `<div class="person-notes">${person.notes}</div>` : '';
+                // Notes - editable
+                const notesHtml = `
+                <div class="note-wrapper">
+                    <div class="person-notes" id="note-${index}" contenteditable="true" 
+                        onclick="handleNoteClick(event, this)" 
+                        oninput="checkNoteChange(${index}, this.innerText)"
+                        onblur="updateNote(${index}, this.innerText)">${person.notes || ''}</div>
+                    <div class="note-actions">
+                        <button class="note-btn note-btn-discard" onmousedown="event.preventDefault()" onclick="event.stopPropagation(); discardNote(${index})">Cancel</button>
+                        <button class="note-btn note-btn-save" id="save-btn-${index}" disabled onmousedown="event.preventDefault()" onclick="event.stopPropagation(); saveNoteManual(${index})">Save</button>
+                    </div>
+                </div>`;
 
-                card.onclick = function () { this.classList.toggle('expanded'); };
+                card.onclick = function () {
+                    this.classList.toggle('expanded');
+                    if (this.classList.contains('expanded')) expandedIndices.add(index);
+                    else expandedIndices.delete(index);
+                };
 
                 card.innerHTML = `
                     <button class="round-checkbox" onclick="event.stopPropagation(); checkIn(${index})" aria-label="Mark done"></button>
@@ -116,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         ${notesHtml}
                         <div class="card-details">
-                            <div>Target: ${freqText}</div>
+                            <div>Target check-in frequency: ${freqText}</div>
                             <div>Last check-in: ${lastDate}</div>
                         </div>
                     </div>
@@ -334,6 +353,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const menu = document.getElementById(`menu-${index}`);
         if (menu) menu.classList.toggle('show');
+    };
+
+    window.handleNoteClick = (event, element) => {
+        const card = element.closest('.person-card');
+        if (card && card.classList.contains('expanded')) {
+            event.stopPropagation();
+        }
+    };
+
+    window.updateNote = (index, text) => {
+        const cleanText = text.trim();
+        if (people[index].notes !== cleanText) {
+            people[index].notes = cleanText;
+            savePeople(); // Triggers render
+            showToast('Note saved');
+        }
+    };
+
+    window.saveNoteManual = (index) => {
+        const noteEl = document.getElementById(`note-${index}`);
+        if (noteEl) {
+            updateNote(index, noteEl.innerText);
+        }
+    };
+
+    window.checkNoteChange = (index, text) => {
+        const btn = document.getElementById(`save-btn-${index}`);
+        if (btn) {
+            const original = people[index].notes || '';
+            btn.disabled = (original === text.trim());
+        }
+    };
+
+    window.discardNote = (index) => {
+        const noteEl = document.getElementById(`note-${index}`);
+        if (noteEl) {
+            noteEl.innerText = people[index].notes || '';
+            noteEl.blur();
+            const btn = document.getElementById(`save-btn-${index}`);
+            if (btn) btn.disabled = true;
+        }
     };
 
     window.addEventListener('click', () => {
