@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 msg.style.color = 'var(--text-muted)';
                 msg.innerHTML = activeTab === 'overdue'
                     ? '<p>You\'re all caught up! 🎉</p>'
-                    : '<p>No one is officially "on track" (check overdue?).</p>';
+                    : '<p>No one is on track. Check-ins overdue?</p>';
                 personList.appendChild(msg);
             }
         }
