@@ -24,10 +24,18 @@
                 <h1>Keepr</h1>
             </div>
 
-            <a href="admin.html" id="admin-btn" class="secondary-btn" aria-label="Manage people"
-                style="margin-left: 8px;">
-                Manage people
-            </a>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark mode"
+                    style="width: 40px; padding: 0; border-radius: 50%;">
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="admin.html" id="admin-btn" class="secondary-btn" aria-label="Manage people">
+                    Manage people
+                </a>
+            </div>
         </header>
 
         <div class="tabs" style="display: flex; gap: 8px; margin-bottom: 16px;">

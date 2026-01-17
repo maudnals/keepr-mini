@@ -1,26 +1,44 @@
 :root {
-    --bg-color: #f8f9fa;
-    --text-main: #1b2733;
-    --text-muted: #536263;
-    --border: 1px solid rgba(0, 0, 0, 0.08);
-    /* Softer border */
     --radius: 12px;
-    /* More rounded */
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
     --font-heading: 'Caveat Brush', cursive;
     --font-body: system-ui, 'Work Sans', sans-serif;
 
-    /* Updated Palette */
+    /* Light Theme */
+    --bg-color: #f8f9fa;
+    --bg-surface: #ffffff;
+    --bg-input: #f8f9fa;
+    --text-main: #1b2733;
+    --text-muted: #536263;
+    --border-color: #eee;
+    --color-default: #dce0e3;
+
     --color-friends-core: #6ec2e7;
     --color-friends-local: #59cd90d6;
     --color-friends-other: #3fa6d6a8;
-    /* Lighter shade of friends-core */
     --color-family-core: #FAC05E;
     --color-family-other: #ffd895;
-    /* Lighter shade of family-core */
     --color-work: #F79D84;
-    --color-default: #dce0e3;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --bg-surface: #1e1e1e;
+    --bg-input: #2d2d2d;
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-color: #333;
+    --color-default: #252525;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+    /* Darker Palette for contrast with light text */
+    --color-friends-core: #1c4b63;
+    --color-friends-local: #1b4d36;
+    --color-friends-other: #164052;
+    --color-family-core: #6b4d1b;
+    --color-family-other: #5c4a30;
+    --color-work: #6e3526;
 }
 
 * {
@@ -37,6 +55,7 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-container {
@@ -77,8 +96,8 @@ header {
 }
 
 .icon-btn {
-    background: white;
-    border: 1px solid #eee;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
     color: var(--text-main);
     padding: 0 14px;
     height: 40px;
@@ -243,10 +262,22 @@ main {
     color: transparent;
 }
 
+.round-checkbox::after {
+    content: '✔';
+    font-size: 1rem;
+    color: var(--text-main);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.round-checkbox:hover::after {
+    opacity: 0.5;
+}
+
 .round-checkbox:hover {
     border-color: var(--text-main);
     /* Highlight */
-    background: white;
+    background: var(--bg-surface);
 }
 
 .round-checkbox:active {
@@ -257,7 +288,7 @@ main {
 
 /* Modal */
 dialog {
-    background: #ffffff;
+    background: var(--bg-surface);
     color: var(--text-main);
     border: none;
     border-radius: 24px;
@@ -289,8 +320,8 @@ input,
 select,
 textarea {
     width: 100%;
-    background: #f8f9fa;
-    border: 1px solid #e0e0e0;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
     color: var(--text-main);
     padding: 14px;
     border-radius: 12px;
@@ -319,7 +350,7 @@ select:focus,
 textarea:focus {
     border-color: #4a90e2;
     box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.15);
-    background: white;
+    background: var(--bg-surface);
 }
 
 textarea {
@@ -374,6 +405,7 @@ textarea {
 
 .note-btn {
     font-size: 0.7rem;
+    font-weight: bold;
     padding: 4px 10px;
     border-radius: 20px;
     border: none;
@@ -392,13 +424,13 @@ textarea {
 }
 
 .note-btn-discard {
-    background: white;
+    background: var(--bg-surface);
     color: var(--text-muted);
-    border: 1px solid #eee;
+    border: 1px solid var(--border-color);
 }
 
 .note-btn-discard:hover {
-    background: #f5f5f5;
+    background: var(--bg-input);
 }
 
 .note-btn:disabled {
@@ -420,7 +452,7 @@ textarea {
 }
 
 .person-card.expanded .person-notes:focus {
-    background: white;
+    background: var(--bg-surface);
     padding: 8px;
     padding-bottom: 34px;
     /* Space for save button */
@@ -481,9 +513,9 @@ textarea {
 }
 
 .secondary-btn {
-    background: #f5f5f5;
+    background: var(--bg-input);
     color: var(--text-main);
-    border: 1px solid #c8d2db;
+    border: 1px solid var(--border-color);
 }
 
 .secondary-btn:hover {
@@ -575,8 +607,8 @@ textarea {
 }
 
 .admin-item {
-    background: #f8f9fa;
-    border: 1px solid #eee;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
     padding: 12px;
     border-radius: 12px;
     display: flex;
@@ -595,8 +627,8 @@ textarea {
 }
 
 .admin-action-btn {
-    background: white;
-    border: 1px solid #ddd;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
     cursor: pointer;
     padding: 6px;
     border-radius: 6px;
@@ -644,7 +676,7 @@ textarea {
 }
 
 .tab-btn.active {
-    background: white;
+    background: var(--bg-surface);
     color: var(--text-main);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
