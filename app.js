@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index !== null) {
             // Edit Mode
             const person = people[index];
-            modalTitle.textContent = "Edit Person";
+            modalTitle.textContent = "Edit person";
             addForm.name.value = person.name;
             addForm.label.value = person.label || '';
             if (addForm.notes) addForm.notes.value = person.notes || '';

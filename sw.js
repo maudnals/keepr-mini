@@ -1,4 +1,4 @@
-const CACHE_NAME = 'keepr-v21';
+const CACHE_NAME = 'keepr-v25';
 const ASSETS = [
     './',
     './index.html',

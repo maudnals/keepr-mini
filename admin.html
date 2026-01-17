@@ -26,27 +26,26 @@
             </div>
 
             <!-- Back to home -->
-            <a href="index.html" class="icon-btn" aria-label="Back">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            <!-- Back to home -->
+            <a href="index.html" class="secondary-btn" aria-label="Back">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
+                Back
             </a>
         </header>
 
-        <div class="modal-header">
-            <h2>Manage people</h2>
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0;">Manage people</h2>
+            <button id="admin-add-btn" class="primary-btn">+ Add person</button>
         </div>
 
         <!-- Main Content for Admin -->
         <main id="admin-list" class="admin-list" style="max-height: unset; overflow-y: visible;">
             <!-- List will be populated here -->
         </main>
-
-        <div class="admin-footer">
-            <button id="admin-add-btn" class="primary-btn" style="width: 100%">+ Add new person</button>
-        </div>
 
         <!-- Add/Edit Person Modal (Still needed as a popup for the form) -->
         <dialog id="add-modal">
