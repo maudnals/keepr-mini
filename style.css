@@ -332,6 +332,8 @@ textarea {
     width: 100%;
     outline: none;
     /* Clean edit feel */
+    border: 1px solid transparent;
+    /* Prevent layout shift on expand */
 }
 
 .person-notes:empty::before {
@@ -397,15 +399,19 @@ textarea {
     /* Show all lines */
     line-clamp: none;
     white-space: pre-wrap;
-    background: rgba(255, 255, 255, 0.5);
+    cursor: text;
+    border: 1px solid transparent;
+    transition: background 0.2s, box-shadow 0.2s, padding 0.2s;
+}
+
+.person-card.expanded .person-notes:focus {
+    background: white;
     padding: 8px;
     padding-bottom: 34px;
     /* Space for save button */
     border-radius: 8px;
-    margin-top: 8px;
-    cursor: text;
-    border: 1px dashed rgba(0, 0, 0, 0.1);
-    /* Hint interactivity */
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .person-card.expanded .person-notes:focus {
