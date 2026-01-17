@@ -64,8 +64,16 @@
                     <input type="text" id="name" name="name" required placeholder="e.g., Mom" autocomplete="off">
                 </div>
                 <div class="input-group">
-                    <label for="frequency">Check-in every...</label>
-                    <div class="frequency-input">
+                    <label>Check in every...</label>
+                    <div class="frequency-presets">
+                        <button type="button" class="preset-btn" data-days="7">Week</button>
+                        <button type="button" class="preset-btn" data-days="30">Month</button>
+                        <button type="button" class="preset-btn" data-days="90">Quarter</button>
+                        <button type="button" class="preset-btn" data-days="360">Year</button>
+                    </div>
+                    <button type="button" id="toggle-custom-freq" class="text-link"
+                        style="font-size: 0.8rem; margin-top: 5px;">Custom check-in frequency</button>
+                    <div id="frequency-custom" class="frequency-input" style="display: none; margin-top: 8px;">
                         <input type="number" id="frequency" name="frequency" required min="1" value="7">
                         <select id="unit" name="unit">
                             <option value="days">Days</option>

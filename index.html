@@ -65,7 +65,15 @@
 
                 <div class="input-group">
                     <label>Check in every...</label>
-                    <div class="frequency-input">
+                    <div class="frequency-presets">
+                        <button type="button" class="preset-btn" data-days="7">Week</button>
+                        <button type="button" class="preset-btn" data-days="30">Month</button>
+                        <button type="button" class="preset-btn" data-days="90">Quarter</button>
+                        <button type="button" class="preset-btn" data-days="360">Year</button>
+                    </div>
+                    <button type="button" id="toggle-custom-freq" class="text-link"
+                        style="font-size: 0.8rem; margin-top: 5px;">Custom check-in frequency</button>
+                    <div id="frequency-custom" class="frequency-input" style="display: none; margin-top: 8px;">
                         <input type="number" name="frequency" id="frequency" required min="1" value="7"
                             style="flex: 1;">
                         <select name="unit" id="unit" style="flex: 1;">

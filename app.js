@@ -96,6 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (person.frequency === 1) freqText = 'Daily';
                 else if (person.frequency === 7) freqText = 'Weekly';
                 else if (person.frequency === 30) freqText = 'Monthly';
+                else if (person.frequency === 90) freqText = 'Quarterly';
+                else if (person.frequency === 360) freqText = 'Yearly';
+
                 else {
                     let count = person.frequency;
                     let unit = 'days';
@@ -251,6 +254,40 @@ document.addEventListener('DOMContentLoaded', () => {
         editingIndex = index;
         addForm.reset();
 
+        const presets = document.querySelectorAll('.preset-btn');
+        const customSection = document.getElementById('frequency-custom');
+        const toggleBtn = document.getElementById('toggle-custom-freq');
+
+        const updateFreqUI = (totalDays) => {
+            // Set inputs
+            let freq = totalDays;
+            let unit = 'days';
+            if (freq % 30 === 0) { freq /= 30; unit = 'months'; }
+            else if (freq % 7 === 0) { freq /= 7; unit = 'weeks'; }
+
+            if (addForm.frequency) addForm.frequency.value = freq;
+            if (addForm.unit) addForm.unit.value = unit;
+
+            // Highlight preset
+            let match = false;
+            presets.forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.dataset.days) === totalDays) {
+                    btn.classList.add('active');
+                    match = true;
+                }
+            });
+
+            // Toggle visibility
+            if (match) {
+                if (customSection) customSection.style.display = 'none';
+                if (toggleBtn) toggleBtn.style.display = 'block';
+            } else {
+                if (customSection) customSection.style.display = 'flex';
+                if (toggleBtn) toggleBtn.style.display = 'none';
+            }
+        };
+
         if (index !== null) {
             // Edit Mode
             const person = people[index];
@@ -261,24 +298,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Populate Last Check-in
             if (addForm.lastCheckin && person.lastCheckin) {
-                // Use simple ISO date part for input
                 addForm.lastCheckin.value = person.lastCheckin.split('T')[0];
             }
 
-            let freq = person.frequency;
-            let unit = 'days';
-            if (freq % 30 === 0) { freq /= 30; unit = 'months'; }
-            else if (freq % 7 === 0) { freq /= 7; unit = 'weeks'; }
-
-            addForm.frequency.value = freq;
-            addForm.unit.value = unit;
+            updateFreqUI(person.frequency);
         } else {
             // New Mode
             modalTitle.textContent = "New person";
-            addForm.frequency.value = 7;
             if (addForm.lastCheckin) {
                 addForm.lastCheckin.value = new Date().toISOString().split('T')[0];
             }
+            // Default: Weekly (7 days)
+            updateFreqUI(7);
         }
         addModal.showModal();
     }
@@ -471,5 +502,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     if (personList) render();
     if (adminList) renderAdmin();
+    // Setup Frequency UI Handlers
+    function setupFrequencyHandlers() {
+        const presets = document.querySelectorAll('.preset-btn');
+        const customSection = document.getElementById('frequency-custom');
+        const toggleBtn = document.getElementById('toggle-custom-freq');
+        const freqInput = document.getElementById('frequency');
+        const unitInput = document.getElementById('unit');
+
+        presets.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                presets.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update inputs based on days
+                const days = parseInt(btn.dataset.days);
+                let freq = days;
+                let unit = 'days';
+                if (freq % 30 === 0) { freq /= 30; unit = 'months'; }
+                else if (freq % 7 === 0) { freq /= 7; unit = 'weeks'; }
+
+                if (freqInput) freqInput.value = freq;
+                if (unitInput) unitInput.value = unit;
+
+                // Hide custom section
+                if (customSection) customSection.style.display = 'none';
+                if (toggleBtn) toggleBtn.style.display = 'block';
+            });
+        });
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                if (customSection) customSection.style.display = 'flex';
+                toggleBtn.style.display = 'none';
+                // Remove preset active state to indicate custom mode
+                presets.forEach(b => b.classList.remove('active'));
+            });
+        }
+    }
+    setupFrequencyHandlers();
+
     setupTheme();
 });
