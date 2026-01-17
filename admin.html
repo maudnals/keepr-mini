@@ -64,6 +64,17 @@
                     <input type="text" id="name" name="name" required placeholder="e.g., Mom" autocomplete="off">
                 </div>
                 <div class="input-group">
+                    <label for="frequency">Check-in every...</label>
+                    <div class="frequency-input">
+                        <input type="number" id="frequency" name="frequency" required min="1" value="7">
+                        <select id="unit" name="unit">
+                            <option value="days">Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
                     <label for="label">Label (optional)</label>
                     <select id="label" name="label">
                         <option value="">None</option>
@@ -83,17 +94,6 @@
                     <label for="notes">Notes (optional)</label>
                     <textarea id="notes" name="notes" rows="3" style="width: 100%;"
                         placeholder="Add some notes..."></textarea>
-                </div>
-                <div class="input-group">
-                    <label for="frequency">Check-in every...</label>
-                    <div class="frequency-input">
-                        <input type="number" id="frequency" name="frequency" required min="1" value="7">
-                        <select id="unit" name="unit">
-                            <option value="days">Days</option>
-                            <option value="weeks">Weeks</option>
-                            <option value="months">Months</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="modal-actions">
                     <button type="button" id="cancel-btn" class="secondary-btn">Cancel</button>
