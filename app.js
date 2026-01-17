@@ -257,7 +257,13 @@ document.addEventListener('DOMContentLoaded', () => {
             modalTitle.textContent = "Edit Person";
             addForm.name.value = person.name;
             addForm.label.value = person.label || '';
-            if (addForm.notes) addForm.notes.value = person.notes || ''; // Populate notes
+            if (addForm.notes) addForm.notes.value = person.notes || '';
+
+            // Populate Last Check-in
+            if (addForm.lastCheckin && person.lastCheckin) {
+                // Use simple ISO date part for input
+                addForm.lastCheckin.value = person.lastCheckin.split('T')[0];
+            }
 
             let freq = person.frequency;
             let unit = 'days';
@@ -270,6 +276,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // New Mode
             modalTitle.textContent = "New Person";
             addForm.frequency.value = 7;
+            if (addForm.lastCheckin) {
+                addForm.lastCheckin.value = new Date().toISOString().split('T')[0];
+            }
         }
         addModal.showModal();
     }
@@ -290,6 +299,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = formData.get('name');
             const label = formData.get('label');
             const notes = formData.get('notes'); // Get notes
+            let lastCheckin = formData.get('lastCheckin'); // Get date input
+
+            // Format date to ISO if present, else default
+            if (lastCheckin) {
+                // Determine if we need to preserve time or just use date?
+                // Using new Date(dateString) creates UTC midnight. 
+                lastCheckin = new Date(lastCheckin).toISOString();
+            } else {
+                lastCheckin = new Date().toISOString();
+            }
+
             let frequency = parseInt(formData.get('frequency'));
             const unit = formData.get('unit');
 
@@ -300,7 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Update
                 people[editingIndex].name = name;
                 people[editingIndex].label = label;
-                people[editingIndex].notes = notes; // Update notes
+                people[editingIndex].notes = notes;
+                people[editingIndex].lastCheckin = lastCheckin; // Update date
                 people[editingIndex].frequency = frequency;
                 showToast('Person updated');
             } else {
@@ -308,9 +329,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 people.push({
                     name,
                     label,
-                    notes, // Save notes
+                    notes,
                     frequency,
-                    lastCheckin: new Date().toISOString()
+                    lastCheckin: lastCheckin // Use from form
                 });
                 showToast('Person added');
             }
