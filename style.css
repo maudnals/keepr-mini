@@ -88,7 +88,7 @@ header {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: transform 0.1s, box-shadow 0.1s;
+    transition: transform 0.1s, box-shadow 0.1s, border-color 0.2s, background-color 0.2s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     text-decoration: none;
     font-weight: 500;
@@ -372,11 +372,16 @@ textarea {
     border: none;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 }
 
 .note-btn-save {
     background: var(--text-main);
     color: white;
+}
+
+.note-btn-save:hover {
+    background: #3a536b;
 }
 
 .note-btn-discard {
@@ -460,7 +465,7 @@ textarea {
     cursor: pointer;
     border-radius: 12px;
     padding: 12px 24px;
-    transition: transform 0.1s;
+    transition: transform 0.1s, background-color 0.2s, border-color 0.2s;
     border: 1px solid transparent;
     display: inline-flex;
     justify-content: center;
@@ -474,9 +479,18 @@ textarea {
     border: 1px solid #c8d2db;
 }
 
+.secondary-btn:hover {
+    background: #e9ecef;
+    border-color: #bec7cf;
+}
+
 .primary-btn {
     background: #2c3e50;
     color: white;
+}
+
+.primary-btn:hover {
+    background: #3a536b;
 }
 
 .primary-btn:active,
@@ -580,6 +594,7 @@ textarea {
     padding: 6px;
     border-radius: 6px;
     color: var(--text-muted);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 }
 
 .admin-action-btn:hover {
