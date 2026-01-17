@@ -112,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         oninput="checkNoteChange(${index}, this.innerText)"
                         onblur="updateNote(${index}, this.innerText)">${person.notes || ''}</div>
                     <div class="note-actions">
-                        <button class="note-btn note-btn-discard" onmousedown="event.preventDefault()" onclick="event.stopPropagation(); discardNote(${index})">Cancel</button>
-                        <button class="note-btn note-btn-save" id="save-btn-${index}" disabled onmousedown="event.preventDefault()" onclick="event.stopPropagation(); saveNoteManual(${index})">Save</button>
+                        <button class="note-btn note-btn-discard" onmousedown="event.preventDefault()" onclick="event.stopPropagation(); discardNote(${index})">Discard note edits</button>
+                        <button class="note-btn note-btn-save" id="save-btn-${index}" disabled onmousedown="event.preventDefault()" onclick="event.stopPropagation(); saveNoteManual(${index})">Save note edits</button>
                     </div>
                 </div>`;
 
