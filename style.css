@@ -20,6 +20,7 @@
     --color-family-core: #FAC05E;
     --color-family-other: #ffd895;
     --color-work: #F79D84;
+    --bg-badge: rgba(255, 255, 255, 0.6);
 }
 
 [data-theme="dark"] {
@@ -39,6 +40,8 @@
     --color-family-core: #6b4d1b;
     --color-family-other: #5c4a30;
     --color-work: #6e3526;
+    --bg-badge: rgba(255, 255, 255, 0.2);
+    --badge-mix-color: #ffffff;
 }
 
 * {
@@ -140,7 +143,8 @@ main {
 }
 
 .person-card {
-    background: var(--color-default);
+    --card-bg: var(--color-default);
+    background: var(--card-bg);
     border-radius: var(--radius);
     padding: 16px 20px;
     display: grid;
@@ -168,27 +172,27 @@ main {
 
 /* Category Colors */
 .person-card.cat-friends-core {
-    background-color: var(--color-friends-core);
+    --card-bg: var(--color-friends-core);
 }
 
 .person-card.cat-friends-local {
-    background-color: var(--color-friends-local);
+    --card-bg: var(--color-friends-local);
 }
 
 .person-card.cat-friends-other {
-    background-color: var(--color-friends-other);
+    --card-bg: var(--color-friends-other);
 }
 
 .person-card.cat-family-core {
-    background-color: var(--color-family-core);
+    --card-bg: var(--color-family-core);
 }
 
 .person-card.cat-family-other {
-    background-color: var(--color-family-other);
+    --card-bg: var(--color-family-other);
 }
 
 .person-card.cat-work {
-    background-color: var(--color-work);
+    --card-bg: var(--color-work);
 }
 
 @keyframes fadeIn {
@@ -238,12 +242,12 @@ main {
     font-family: var(--font-body);
     font-size: 0.7rem;
     letter-spacing: 0.5px;
-    background: rgba(255, 255, 255, 0.6);
-    color: var(--text-main);
+    background: var(--bg-badge);
+    color: lch(from var(--card-bg) calc(l * 0.8) c h);
     padding: 3px 8px;
     border-radius: 20px;
     font-weight: 600;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid lch(from var(--card-bg) calc(l * 0.95) c h);
     white-space: nowrap;
 }
 
@@ -457,7 +461,7 @@ textarea {
     padding-bottom: 34px;
     /* Space for save button */
     border-radius: 8px;
-    border: 1px dashed rgba(0, 0, 0, 0.2);
+    border: 1px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
