@@ -154,7 +154,7 @@ main {
     border: none;
     box-shadow: var(--shadow);
     animation: fadeIn 0.3s ease-out;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.3s;
     cursor: pointer;
     align-items: start;
     /* Align to top when expanded */
@@ -167,7 +167,7 @@ main {
 }
 
 .person-card:hover {
-    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 /* Category Colors */
