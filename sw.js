@@ -1,4 +1,4 @@
-const CACHE_NAME = 'keepr-v40';
+const CACHE_NAME = 'keepr-v43';
 const ASSETS = [
     './',
     './index.html',
@@ -6,6 +6,7 @@ const ASSETS = [
     './style.css',
     './app.js',
     './manifest.json',
+    './logo-pixel-heart.png',
     './icon-192.png',
     './icon-512.png'
 ];
