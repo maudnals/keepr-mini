@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addForm.unit.value = unit;
         } else {
             // New Mode
-            modalTitle.textContent = "New Person";
+            modalTitle.textContent = "New person";
             addForm.frequency.value = 7;
             if (addForm.lastCheckin) {
                 addForm.lastCheckin.value = new Date().toISOString().split('T')[0];
